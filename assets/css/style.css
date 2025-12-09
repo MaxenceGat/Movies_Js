@@ -1,13 +1,28 @@
-.movie-card {
-    border: 1px solid #ccc;
-    margin: 10px;
-    padding: 10px;
-    display: inline-block;
-    width: 200px;
-    text-align: center;
+#posters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+    padding: 20px;
 }
 
-.movie-card img {
-    width: 100%;
+#posters a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+#posters img {
+    width: 180px;
     height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#posters div {
+    margin-top: 5px;
+    font-size: 14px;
+    text-align: center;
 }
