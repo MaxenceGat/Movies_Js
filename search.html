@@ -1,12 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script type="module" src="/assets/js/pages/search.js"></script>
-
+    <meta charset="UTF-8" />
+    <title>Recherche de films</title>
+    <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body>
+<div class="topbar">
+    <div class="logo">Ciné du Village</div>
+    <nav class="nav-links">
+        <a href="/index.html">Tendances</a>
+        <a href="/search.html">Recherche</a>
+    </nav>
+</div>
 
+<main class="page">
+    <h1>Recherche de films</h1>
+
+    <div class="search-bar-wrapper">
+        <input
+                id="search-input"
+                type="text"
+                placeholder="Avengers..."
+        >
+    </div>
+
+    <div id="search-results"></div>
+
+    <button id="search-more" style="display:none;">
+        Charger plus de résultats
+    </button>
+</main>
+
+<script type="module" src="/assets/js/pages/search.js"></script>
 </body>
 </html>

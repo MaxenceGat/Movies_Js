@@ -1,4 +1,4 @@
-import {searchMovies} from '../ombd.js';
+import { searchMovies } from '../ombd.js';
 
 const input = document.getElementById('search-input');
 const resultsDiv = document.getElementById('search-results');
@@ -9,10 +9,16 @@ let currentPage = 1;
 let totalResults = 0;
 let isLoading = false;
 
+function clearResults() {
+    resultsDiv.innerHTML = '';
+    totalResults = 0;
+    currentPage = 1;
+    moreBtn.style.display = 'none';
+}
+
 async function performSearch(reset = false) {
     if (!currentQuery.trim()) {
-        resultsDiv.innerHTML = '';
-        moreBtn.style.display = 'none';
+        clearResults();
         return;
     }
 
@@ -20,11 +26,10 @@ async function performSearch(reset = false) {
     isLoading = true;
 
     if (reset) {
-        currentPage = 1;
-        resultsDiv.innerHTML = '';
+        clearResults();
     }
 
-    const { movies, totalResults: total, error } = await searchMovies(currentQuery, currentPage);
+    const {movies, totalResults: total, error} = await searchMovies(currentQuery, currentPage);
     if (error) {
         resultsDiv.textContent = error;
         isLoading = false;
