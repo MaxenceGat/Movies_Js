@@ -1,37 +1,109 @@
+import { getMovieByTitle, searchMovies } from '../ombd.js';
 
-
-const APIkey = "e3c1aaa8";
-const searchQuery = "Avengers";
 const postersContainer = document.getElementById('posters');
+const loadMoreBtn = document.getElementById('load-more');
 
-fetch(`http://www.omdbapi.com/?apikey=${APIkey}&s=${searchQuery}&type=movie`)
-    .then(response => response.json())
-    .then(data => {
-        if (data.Search) {
-            const films = data.Search.slice(0, 5);
-            films.forEach(movie => {
-                const link = document.createElement('a');
-                link.href = `movies.html?id=${movie.imdbID}`;
-                link.target = "_blank";
+const TRENDING_TITLES = [
+    'Guardians of the Galaxy',
+    'Guardians of the Galaxy Vol. 2',
+    'Guardians of the Galaxy Vol. 3',
+    'Avengers: Endgame',
+    'Inception',
+    'The Matrix',
+    'Transformers',
+    'Spider-Man: No Way Home'
+];
 
-                const img = document.createElement('img');
-                img.alt = movie.Title;
-                img.style.width = '180px';
-                img.style.height = 'auto';
-                img.style.borderRadius = '8px';
-                img.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+let initialLoaded = false;
 
-                const title = document.createElement('div');
-                title.textContent = movie.Title;
-                title.style.textAlign = 'center';
-                title.style.marginTop = '5px';
+async function displayMovieCard(movie) {
+    const link = document.createElement('a');
+    link.href = `movie.html?id=${movie.imdbID}`;
 
-                link.appendChild(img);
-                link.appendChild(title);
-                postersContainer.appendChild(link);
-            });
-        } else {
-            postersContainer.innerHTML = 'Aucun film trouvé.';
+    const img = document.createElement('img');
+    img.src = movie.Poster && movie.Poster !== 'N/A' ? movie.Poster : '';
+    img.alt = movie.Title;
+    img.className = 'movie-poster';
+
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'movie-title';
+    titleDiv.textContent = `${movie.Title} (${movie.Year})`;
+
+    link.appendChild(img);
+    link.appendChild(titleDiv);
+    postersContainer.appendChild(link);
+}
+async function loadInitialTrending() {
+    for (const title of TRENDING_TITLES) {
+        try {
+            const movie = await getMovieByTitle(title);
+            await displayMovieCard(movie);
+        } catch (e) {
+            console.error('Erreur film tendance :', title, e);
         }
-    })
-    .catch(error => console.log('Erreur :', error));
+    }
+    initialLoaded = true;
+}
+
+function randomSearchQuery() {
+    const queries = [
+        'space',
+        'star',
+        'war',
+        'love',
+        'night',
+        'future',
+        'world',
+        'hero',
+        'dragon',
+        'city'
+    ];
+    const index = Math.floor(Math.random() * queries.length);
+    return queries[index];
+}
+
+
+async function loadRandomMovies() {
+    if (!initialLoaded) {
+        await loadInitialTrending();
+    }
+
+    let attempts = 0;
+    let movies = [];
+    let error = null;
+
+    while (attempts < 5 && movies.length === 0) {
+        const query = randomSearchQuery();
+        const randomPage = Math.floor(Math.random() * 5) + 1;
+
+        const result = await searchMovies(query, randomPage);
+        movies = result.movies;
+        error = result.error;
+        attempts++;
+
+        if (error && error.includes('Too many results')) {
+            movies = [];
+            continue;
+        }
+    }
+
+    if (movies.length === 0) {
+        console.warn('erreur random', error);
+        return;
+    }
+
+    const shuffled = movies.sort(() => Math.random() - 0.5);
+    const toShow = shuffled.slice(0, 3);
+
+    for (const movie of toShow) {
+        await displayMovieCard(movie);
+    }
+}
+
+
+loadMoreBtn.addEventListener('click', () => {
+    loadRandomMovies();
+});
+
+loadInitialTrending();
+

@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Affiches de films</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <meta charset="UTF-8" />
+    <title>Ciné du Village - Tendances</title>
+    <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body>
-<h1>Affiches de films</h1>
-<div id="posters"></div>
-<script src="assets/js/pages/index.js"></script>
+<div class="topbar">
+    <div class="logo">Ciné du Village</div>
+    <nav class="nav-links">
+        <a href="/index.html">Tendances</a>
+        <a href="/search.html">Recherche</a>
+    </nav>
+</div>
+
+<main class="page">
+    <h1>Films tendances 2024</h1>
+
+    <div id="posters"></div>
+
+    <button id="load-more">Charger plus de films</button>
+</main>
+
+
+<script type="module" src="/assets/js/pages/index.js"></script>
 </body>
 </html>

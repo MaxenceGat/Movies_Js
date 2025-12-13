@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>Détails du film</title>
+    <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body>
+<div class="topbar">
+    <div class="logo">Ciné du Village</div>
+    <nav class="nav-links">
+        <a href="/index.html">Tendances</a>
+        <a href="/search.html">Recherche</a>
+    </nav>
+</div>
 
+<main class="page" id="movie-page">
+    <h1 id="movie-title"></h1>
+
+    <section class="movie-layout">
+        <div class="movie-poster-wrapper">
+            <img id="movie-poster" alt="Poster du film" />
+        </div>
+
+        <div class="movie-info">
+            <p id="movie-plot"></p>
+            <p><strong>Genre :</strong> <span id="movie-genre"></span></p>
+            <p><strong>Acteurs :</strong> <span id="movie-actors"></span></p>
+            <p id="movie-ratings"></p>
+            <p id="movie-dvd-date"></p>
+        </div>
+    </section>
+</main>
+
+
+<script type="module" src="/assets/js/pages/movie.js"></script>
 </body>
 </html>
