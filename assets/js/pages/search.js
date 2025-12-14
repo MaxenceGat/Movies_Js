@@ -1,4 +1,5 @@
-import { searchMovies } from '../ombd.js';
+import {searchMovies} from '../ombd.js';
+
 
 const input = document.getElementById('search-input');
 const resultsDiv = document.getElementById('search-results');
@@ -59,7 +60,7 @@ async function performSearch(reset = false) {
     currentPage += 1;
     isLoading = false;
 
-    const alreadyLoaded = (currentPage - 1) * 10;
+    const alreadyLoaded = (currentPage-1)*10;
     moreBtn.style.display = alreadyLoaded < totalResults ? 'inline-block' : 'none';
 }
 

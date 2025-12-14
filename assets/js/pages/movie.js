@@ -45,7 +45,7 @@ async function loadMovie() {
             const formatted = date.toLocaleDateString('fr-FR'); // jj/mm/aaaa
             dvdDateEl.textContent = `Sortie DVD : ${formatted}`;
         }
-    } catch (e) {
+    } catch {
         titleEl.textContent = 'Film introuvable';
     }
 }

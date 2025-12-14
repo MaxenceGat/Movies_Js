@@ -1,4 +1,5 @@
-import { getMovieByTitle, searchMovies } from '../ombd.js';
+import { getMovieByTitle, searchMovies, getMovieById } from '../ombd.js';
+
 
 const postersContainer = document.getElementById('posters');
 const loadMoreBtn = document.getElementById('load-more');
@@ -29,17 +30,28 @@ async function displayMovieCard(movie) {
     titleDiv.className = 'movie-title';
     titleDiv.textContent = `${movie.Title} (${movie.Year})`;
 
+    const shortPlot = document.createElement('p');
+    shortPlot.className = 'movie-short-plot';
+    if (movie.Plot && movie.Plot !== 'N/A') {
+        shortPlot.textContent =
+            movie.Plot.length > 120 ? movie.Plot.slice(0, 117) + '...' : movie.Plot;
+    } else {
+        shortPlot.textContent = '';
+    }
+
     link.appendChild(img);
     link.appendChild(titleDiv);
+    link.appendChild(shortPlot);
     postersContainer.appendChild(link);
 }
+
 async function loadInitialTrending() {
     for (const title of TRENDING_TITLES) {
         try {
             const movie = await getMovieByTitle(title);
             await displayMovieCard(movie);
-        } catch (e) {
-            console.error('Erreur film tendance :', title, e);
+        } catch {
+            console.error('Erreur film tendance :', title);
         }
     }
     initialLoaded = true;
@@ -58,7 +70,7 @@ function randomSearchQuery() {
         'dragon',
         'city'
     ];
-    const index = Math.floor(Math.random() * queries.length);
+    const index = Math.floor(Math.random()*queries.length);
     return queries[index];
 }
 
@@ -74,7 +86,7 @@ async function loadRandomMovies() {
 
     while (attempts < 5 && movies.length === 0) {
         const query = randomSearchQuery();
-        const randomPage = Math.floor(Math.random() * 5) + 1;
+        const randomPage = Math.floor(Math.random()*5)+1;
 
         const result = await searchMovies(query, randomPage);
         movies = result.movies;
@@ -83,7 +95,6 @@ async function loadRandomMovies() {
 
         if (error && error.includes('Too many results')) {
             movies = [];
-            continue;
         }
     }
 
@@ -92,11 +103,12 @@ async function loadRandomMovies() {
         return;
     }
 
-    const shuffled = movies.sort(() => Math.random() - 0.5);
+    const shuffled = movies.sort(() => Math.random()-0.5);
     const toShow = shuffled.slice(0, 3);
 
     for (const movie of toShow) {
-        await displayMovieCard(movie);
+        const fullMovie = await getMovieById(movie.imdbID);
+        await displayMovieCard(fullMovie);
     }
 }
 
