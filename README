@@ -1,5 +1,117 @@
-## Installation
-npm install
-##Run
-npm run dev
-puis ouvrir http://localhost:5173/index.html
+############## Ciné du Village ##############
+
+###Fonctionnalités
+
+-index.html
+  - Affiche une liste de films tendances.
+  - Pour chaque film : poster, titre, année, petit résumé.
+  - En cliquant sur un film, on arrive sur sa fiche (`movie.html`).
+  - Bouton "Charger plus de films" pour ajouter d’autres films.
+
+-search.html
+  - Champ de recherche pour trouver des films.
+  - Les résultats s’affichent pendant qu’on tape (sans rechargement de page).
+  - Bouton « Charger plus de résultats » pour voir la suite.
+  - Chaque résultat mène à la fiche du film (`movie.html`).
+
+-movie.html
+  - Affiche les infos détaillées d’un film :
+    - titre
+    - poster
+    - grand résumé
+    - genre
+    - acteurs
+    - notes
+
+###Dossier du projet
+Movies_Js/
+index.html
+search.html
+movie.html
+vite.config.js
+package.json
+package-lock.json
+assets/
+  css/
+    style.css
+  js/
+  ombd.js
+  pages/
+    index.js
+    search.js
+    movie.js
+
+
+###les fonctions
+
+##ombd.js
+
+- searchMovies(query, page = 1)  
+  Appelle l’API OMDb avec s=query et page pour récupérer une liste de films (10 par page).  
+  Retourne un objet avec movies, totalResults et error.
+
+- getMovieById(id)  
+  Appelle l’API OMDb avec i=id et plot=full pour récupérer tous les détails d’un film.  
+  Retourne directement l’objet film.
+
+- getMovieByTitle(title)  
+  Appelle l’API OMDb avec t=title pour récupérer un film précis par son titre.  
+  Utilisé pour les films tendances de l’accueil.
+
+##index.js
+
+- displayMovieCard(movie)  
+  Crée une carte de film (poster, titre, année, petit résumé) et l'affiche.  
+  Le clic sur la carte renvoie vers movie.html?id=...
+
+- loadInitialTrending()  
+  Parcourt la liste de titres tendances, appelle getMovieByTitle pour chacun, et affiche les 8 cartes de base sur la page d’accueil.
+
+- randomSearchQuery()  
+  Retourne au hasard un petit mot-clé (dans une liste) pour faire une recherche aléatoire dans l’API.
+
+- loadRandomMovies()  
+  Utilise randomSearchQuery et searchMovies pour récupérer des films au hasard, puis getMovieById pour avoir les détails, et affiche de nouveaux films quand on clique sur Charger plus de films.
+
+##search.js
+
+- clearResults()  
+  Vide la zone des résultats, remet la page courante à 1 et cache le bouton Charger plus.
+
+- performSearch(reset = false)  
+  Appelle searchMovies(currentQuery, currentPage) pour la valeur actuelle du champ de recherche.  
+  Affiche les films trouvés sous forme de cartes et gère la pagination (mise à jour de currentPage et affichage du bouton Charger plus).
+
+- Listener sur input  
+  Met à jour currentQuery à chaque frappe et relance performSearch(true) pour une recherche en temps réel.
+
+- Listener sur moreBtn  
+  Appelle performSearch(false) pour charger la page suivante de résultats.
+
+##movie.js
+
+- Récupération de id dans l’URL  
+  Utilise URLSearchParams pour lire le paramètre id dans l’adresse (movie.html?id=...).
+
+- loadMovie()  
+  Appelle getMovieById(id) pour récupérer les détails du film.  
+  Remplit la page avec :  
+  - le titre  
+  - le poster  
+  - le grand résumé  
+  - le genre  
+  - les acteurs  
+  - les notes  
+  - la date de sortie DVD formatée en français
+
+###Prérequis
+
+- Node.js installé.  
+- Une clé API OMDb : https://www.omdbapi.com/apikey.aspx  
+  Mettre cette clé dans assets/js/ombd.js :
+
+
+###Lancement 
+npm run build
+npm run start
+CLiquer sur Local:   http://localhost:3000  
