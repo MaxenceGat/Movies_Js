@@ -112,6 +112,5 @@ assets/
 
 
 ###Lancement 
-npm run build
-npm run start
-CLiquer sur Local:   http://localhost:3000  
+npm run dev
+ Local:   http://localhost:5173/
