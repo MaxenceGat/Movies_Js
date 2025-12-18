@@ -125,7 +125,7 @@ Movies_Js/
 - Mettre cette clé dans `assets/js/ombd.js` :
 
 ##  Lancement 
-
+-Ouvrir Movies_Js-main
 -npm install
 -npm run dev
 http://localhost:5173/
