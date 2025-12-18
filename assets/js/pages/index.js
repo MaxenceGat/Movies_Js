@@ -5,7 +5,7 @@ const postersContainer = document.getElementById('posters');
 const loadMoreBtn = document.getElementById('load-more');
 
 const TRENDING_TITLES = [
-    'The Godfather",
+    'Dune: Part Two',
     'Guardians of the Galaxy Vol. 3',
     'Avengers: Endgame',
     'Inception',
