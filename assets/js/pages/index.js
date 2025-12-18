@@ -5,8 +5,7 @@ const postersContainer = document.getElementById('posters');
 const loadMoreBtn = document.getElementById('load-more');
 
 const TRENDING_TITLES = [
-    'Guardians of the Galaxy',
-    'Guardians of the Galaxy Vol. 2',
+    'The Godfather",
     'Guardians of the Galaxy Vol. 3',
     'Avengers: Endgame',
     'Inception',
