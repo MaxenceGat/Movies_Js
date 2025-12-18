@@ -1,0 +1,21 @@
+{
+  "name": "movies_js-main",
+  "version": "1.0.0",
+  "description": "- Affiche une liste de films tendances. - Pour chaque film : poster, titre, année, court résumé. - Clic sur un film → redirection vers sa fiche `movie.html`. - Bouton **Charger plus de films** pour ajouter d’autres films.",
+  "main": "vite.config.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "serve -s dist"
+  },
+
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "serve": "^14.2.5",
+    "vite": "^7.3.0"
+  }
+}
